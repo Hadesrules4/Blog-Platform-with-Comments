@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("textarea[maxlength]").forEach(t=>{const c=document.createElement("small");c.className="text-muted d-block text-end mt-1";t.insertAdjacentElement("afterend",c);const u=()=>c.textContent=`${t.value.length}/${t.maxLength}`;t.addEventListener("input",u);u()})});
