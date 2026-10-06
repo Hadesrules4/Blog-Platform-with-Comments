@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: blog_platform
+      MYSQL_USER: bloguser
+      MYSQL_PASSWORD: blogpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on: [db]
+    ports: ["5000:5000"]
+    environment:
+      SECRET_KEY: change-this-in-production
+      JWT_SECRET_KEY: change-this-jwt-secret-in-production
+      DATABASE_URL: mysql+pymysql://bloguser:blogpassword@db:3306/blog_platform
+      SESSION_COOKIE_SECURE: "0"
+      CORS_ORIGINS: http://localhost:5000
+volumes:
+  mysql_data:
